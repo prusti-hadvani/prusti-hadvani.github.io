@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prusti Hadvani | Software Engineer</title>
+<meta name="description" content="Prusti Hadvani — Software Engineer specializing in Go, React, Next.js, real-time systems and clean architecture." />
+<style>
+  :root{
+    --bg:#0a0e10;
+    --bg-raised:#10161a;
+    --line:#1f2830;
+    --text:#d6dee3;
+    --text-dim:#788690;
+    --accent:#4fd6a8;
+    --accent-dim:#2c5548;
+    --amber:#e6b673;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ::selection{background:var(--accent-dim);color:#fff;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important;transition-duration:.001ms !important;} }
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+
+  /* Nav */
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(10,14,16,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px;}
+  nav .brand{color:var(--text);font-weight:600;}
+  nav .brand span{color:var(--accent);}
+  nav ul{list-style:none;display:flex;gap:22px;}
+  nav ul a{color:var(--text-dim);font-size:13px;transition:color .15s ease;}
+  nav ul a:hover,nav ul a.active{color:var(--accent);text-decoration:none;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);color:var(--text);
+    padding:6px 10px;border-radius:var(--radius);cursor:pointer;font-family:inherit;}
+
+  .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .prompt{color:var(--text-dim);font-size:13px;margin-bottom:14px;}
+  .prompt .p{color:var(--accent);}
+  h2{font-size:18px;color:var(--text);margin-bottom:20px;font-weight:600;}
+  h2 .hash{color:var(--text-dim);font-weight:400;margin-right:8px;}
+
+  /* Hero */
+  .hero{padding-top:72px;padding-bottom:56px;}
+  .hero .hello{color:var(--accent);font-size:14px;margin-bottom:10px;}
+  .hero h1{font-size:34px;color:var(--text);font-weight:700;line-height:1.25;margin-bottom:8px;}
+  .hero .role{color:var(--amber);font-size:17px;margin-bottom:18px;min-height:24px;display:flex;align-items:center;}
+  .cursor{display:inline-block;width:9px;height:18px;background:var(--amber);margin-left:3px;animation:blink 1s step-end infinite;}
+  @keyframes blink{0%,50%{opacity:1;}50.01%,100%{opacity:0;}}
+  .hero p{color:var(--text-dim);max-width:56ch;margin-bottom:26px;}
+  .hero .links{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-block;border:1px solid var(--accent-dim);color:var(--accent);padding:9px 16px;border-radius:var(--radius);font-size:13px;transition:background .15s ease,transform .15s ease;}
+  .btn:hover{background:var(--accent-dim);text-decoration:none;transform:translateY(-1px);}
+  .btn.ghost{border-color:var(--line);color:var(--text-dim);}
+  .btn.ghost:hover{border-color:var(--text-dim);color:var(--text);background:transparent;}
+
+  /* About */
+  .about-box{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);padding:22px;}
+  .about-box p{color:var(--text-dim);margin-bottom:14px;}
+  .about-box p:last-child{margin-bottom:0;}
+  .quote{border-left:2px solid var(--accent-dim);padding-left:14px;color:var(--text-dim);font-style:italic;margin-top:16px;}
+
+  /* Skills */
+  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .skill-group h3{font-size:12px;color:var(--text-dim);margin-bottom:10px;}
+  .skill-group h3::before{content:"▸ ";color:var(--accent);}
+  .skill-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px;}
+  .skill-list li{border:1px solid var(--line);color:var(--text);font-size:12.5px;padding:4px 10px;border-radius:var(--radius);background:var(--bg-raised);transition:border-color .15s ease,color .15s ease;}
+  .skill-list li:hover{border-color:var(--accent-dim);color:var(--accent);}
+
+  /* Experience */
+  .job{margin-bottom:32px;}
+  .job:last-child{margin-bottom:0;}
+  .job-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:4px;}
+  .job-title{color:var(--text);font-weight:600;font-size:15px;}
+  .job-meta{color:var(--text-dim);font-size:12.5px;}
+  .job-company{color:var(--amber);font-size:13px;margin-bottom:10px;}
+  .job ul{list-style:none;}
+  .job li{color:var(--text-dim);font-size:14px;padding-left:16px;position:relative;margin-bottom:7px;}
+  .job li::before{content:"→";position:absolute;left:0;color:var(--accent);}
+
+  /* Projects */
+  .project{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px;transition:border-color .2s ease;}
+  .project:hover{border-color:var(--accent-dim);}
+  .project:last-child{margin-bottom:0;}
+  .project-title{color:var(--text);font-weight:600;font-size:15px;margin-bottom:6px;}
+  .project-desc{color:var(--text-dim);font-size:14px;margin-bottom:12px;}
+  .project-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .project-tags span{font-size:11.5px;color:var(--accent);border:1px solid var(--accent-dim);padding:2px 8px;border-radius:var(--radius);}
+  .project-links a{font-size:13px;margin-right:16px;}
+
+  /* Education */
+  .edu-item{margin-bottom:14px;}
+  .edu-title{color:var(--text);font-weight:600;font-size:14.5px;}
+  .edu-meta{color:var(--text-dim);font-size:13px;}
+
+  /* Contact */
+  .contact-links{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+  .contact-links a{color:var(--text);font-size:14px;transition:color .15s ease;}
+  .contact-links a span{color:var(--text-dim);}
+  .contact-links a:hover{color:var(--accent);}
+
+  footer{padding:28px 0;text-align:center;color:var(--text-dim);font-size:12.5px;}
+
+  @media (max-width:640px){
+    nav ul{position:absolute;top:52px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;padding:16px 24px;gap:14px;display:none;}
+    nav ul.open{display:flex;}
+    .nav-toggle{display:block;}
+    .hero h1{font-size:26px;}
+    .skill-grid{grid-template-columns:1fr;}
+    section{padding:40px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">~/<span>prusti</span></div>
+    <ul id="navList">
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">≡</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hello">$ whoami</div>
+    <h1>Prusti Hadvani</h1>
+    <div class="role" id="roleText"><span class="cursor"></span></div>
+    <p>
+      I build real-time backend systems in Go and ship the frontends that talk to them.
+      Comfortable across the stack — REST APIs, WebSockets, MQTT, clean architecture,
+      and the React/Next.js interfaces on top.
+    </p>
+    <div class="links">
+      <a class="btn" href="mailto:prustihadvani60@gmail.com">Get in touch</a>
+      <a class="btn ghost" href="https://github.com/prusti-hadvani" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn ghost" href="https://linkedin.com/in/prustihadvani" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> cat about.txt</div>
+    <h2><span class="hash">#</span>About</h2>
+    <div class="about-box">
+      <p>
+        I'm a full-stack software engineer at Midaas Telesoft, working in the telemetry/IoT domain.
+        Most of my day-to-day is Go — building REST APIs, real-time pipelines over WebSockets and MQTT,
+        and securing service-to-service communication with JWT and X.509 certificates.
+      </p>
+      <p>
+        On the frontend I work with React, Next.js and TypeScript, usually pairing it with the
+        real-time backends I build. I lean on clean/onion architecture and the Observer pattern
+        to keep systems maintainable as they grow.
+      </p>
+      <div class="quote">"Simple things should be simple. Complex things should be possible." — Alan Kay</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> ls -la skills/</div>
+    <h2><span class="hash">#</span>Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <ul class="skill-list"><li>Go</li><li>TypeScript</li><li>JavaScript</li><li>Python</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Backend & Real-Time</h3>
+        <ul class="skill-list"><li>Gorilla Mux</li><li>REST APIs</li><li>WebSockets</li><li>SSE</li><li>MQTT</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Frontend</h3>
+        <ul class="skill-list"><li>React</li><li>Next.js</li><li>Redux</li><li>Elastic UI</li><li>Tailwind CSS</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Security</h3>
+        <ul class="skill-list"><li>JWT (Access/Refresh)</li><li>X.509 Certificates</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Databases</h3>
+        <ul class="skill-list"><li>PostgreSQL</li><li>SQLite</li><li>MySQL</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Tools & Testing</h3>
+        <ul class="skill-list"><li>Docker</li><li>Git</li><li>Postman</li><li>Go Testing</li><li>Vitest</li><li>Cypress</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> history | grep experience</div>
+    <h2><span class="hash">#</span>Experience</h2>
+    <div class="job">
+      <div class="job-head"><span class="job-title">Software Engineer</span><span class="job-meta">Dec 2024 — Present</span></div>
+      <div class="job-company">Midaas Telesoft Pvt. Ltd.</div>
+      <ul>
+        <li>Developed end-to-end features using Go backend services and React/Next.js frontend applications.</li>
+        <li>Designed and implemented high-performance Go REST APIs used in live systems.</li>
+        <li>Implemented authentication and authorization using JWT-based access and refresh tokens.</li>
+        <li>Built low-latency real-time pipelines using WebSockets, SSE, and MQTT across distributed clients.</li>
+        <li>Applied Onion Architecture and the Observer pattern to improve scalability and code quality.</li>
+        <li>Worked with X.509 certificates for secure service-to-service communication.</li>
+        <li>Wrote unit and integration tests to reduce regressions and improve release stability.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-head"><span class="job-title">Software Engineer Intern</span><span class="job-meta">May 2024 — Nov 2024</span></div>
+      <div class="job-company">Midaas Telesoft Pvt. Ltd.</div>
+      <ul>
+        <li>Contributed to backend development by building Go REST APIs and implementing real-time updates using WebSockets.</li>
+        <li>Supported adoption of clean architecture principles and the Observer pattern in production codebases.</li>
+        <li>Developed responsive frontend features using React, TypeScript, Tailwind CSS, and Chakra UI.</li>
+        <li>Worked with PostgreSQL and MySQL in Docker-based environments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> find ./projects -type f</div>
+    <h2><span class="hash">#</span>Projects</h2>
+    <div class="project">
+      <div class="project-title">Employee Management System</div>
+      <div class="project-desc">
+        A full-stack employee management system with real-time updates, enabling instant
+        data synchronization across multiple clients via WebSockets, built on clean
+        architecture principles for long-term scalability.
+      </div>
+      <div class="project-tags"><span>Go</span><span>PostgreSQL</span><span>Next.js</span><span>WebSockets</span><span>Docker</span></div>
+      <div class="project-links"><a href="https://github.com/prusti-hadvani" target="_blank" rel="noopener">Code ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> cat education.log</div>
+    <h2><span class="hash">#</span>Education</h2>
+    <div class="edu-item">
+      <div class="edu-title">Bachelor of Computer Application</div>
+      <div class="edu-meta">College of Computer Science and Information Technology, Junagadh · Aug 2021 — Jul 2024 · CGPA 9.10/10</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="prompt"><span class="p">$</span> ./contact.sh</div>
+    <h2><span class="hash">#</span>Get in touch</h2>
+    <p style="color:var(--text-dim);max-width:56ch;">
+      Open to new opportunities and always happy to talk Go, real-time systems,
+      or system design. Reach out through any of the channels below.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:prustihadvani60@gmail.com"><span>email</span> · prustihadvani60@gmail.com</a>
+      <a href="tel:+919773232731"><span>phone</span> · +91 97732 32731</a>
+      <a href="https://github.com/prusti-hadvani" target="_blank" rel="noopener"><span>github</span> · github.com/prusti-hadvani</a>
+      <a href="https://linkedin.com/in/prustihadvani" target="_blank" rel="noopener"><span>linkedin</span> · linkedin.com/in/prustihadvani</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Prusti Hadvani. Built with HTML, CSS & JS. Deployed on Vercel.</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const list = document.getElementById('navList');
+  toggle.addEventListener('click', () => list.classList.toggle('open'));
+  list.querySelectorAll('a').forEach(a => a.addEventListener('click', () => list.classList.remove('open')));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = list.querySelectorAll('a');
+  const setActive = () => {
+    let current = '';
+    sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 80) current = sec.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  };
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  const roles = ["Software Engineer", "Go Backend Specialist", "Real-Time Systems Developer"];
+  const roleEl = document.getElementById('roleText');
+  const cursor = document.querySelector('.cursor');
+  let ri = 0, ci = 0, deleting = false;
+  function typeLoop() {
+    const word = roles[ri];
+    if (!deleting) {
+      ci++; roleEl.textContent = word.slice(0, ci); roleEl.appendChild(cursor);
+      if (ci === word.length) { deleting = true; setTimeout(typeLoop, 1400); return; }
+      setTimeout(typeLoop, 55);
+    } else {
+      ci--; roleEl.textContent = word.slice(0, ci); roleEl.appendChild(cursor);
+      if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+      setTimeout(typeLoop, 30);
+    }
+  }
+  typeLoop();
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
